@@ -31,8 +31,13 @@ The variables included in this dataset are:
     library(ggplot2)
     library(dplyr)
 
-# Read the file
-    activity <- read_csv("repdata_data_activity/activity.csv")
+# Download file from web
+    download.file("https://d396qusza40orc.cloudfront.net/repdata%2Fdata%2Factivity.zip", destfile="activity.zip", 
+                  mode="wb")
+
+# Unzip data  
+    unzip("activity.zip")
+    activity <- read.csv("activity.csv", header = TRUE)
     activity$Date <- as.Date(activity$date)
 
 ```

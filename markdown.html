@@ -190,16 +190,14 @@ interval: Identifier for the 5-minute interval in which measurement was taken.</
 <pre><code>## The following objects are masked from &#39;package:base&#39;:
 ## 
 ##     intersect, setdiff, setequal, union</code></pre>
-<pre class="r"><code># Read the file
-    activity &lt;- read_csv(&quot;repdata_data_activity/activity.csv&quot;)</code></pre>
-<pre><code>## 
-## -- Column specification --------------------------------------------------------
-## cols(
-##   steps = col_double(),
-##   date = col_date(format = &quot;&quot;),
-##   interval = col_double()
-## )</code></pre>
-<pre class="r"><code>    activity$Date &lt;- as.Date(activity$date)</code></pre>
+<pre class="r"><code># Download file from web
+    download.file(&quot;https://d396qusza40orc.cloudfront.net/repdata%2Fdata%2Factivity.zip&quot;, destfile=&quot;activity.zip&quot;, 
+                  mode=&quot;wb&quot;)
+
+# Unzip data  
+    unzip(&quot;activity.zip&quot;)
+    activity &lt;- read.csv(&quot;activity.csv&quot;, header = TRUE)
+    activity$Date &lt;- as.Date(activity$date)</code></pre>
 </div>
 <div id="histogram-of-total-number-of-steps-taken-each-day" class="section level3">
 <h3>2 ] HISTOGRAM OF TOTAL NUMBER OF STEPS TAKEN EACH DAY</h3>
@@ -212,7 +210,7 @@ interval: Identifier for the 5-minute interval in which measurement was taken.</
     head(TotalStepsPerDay,10)</code></pre>
 <pre><code>## # A tibble: 10 x 2
 ##    Date       sumsteps
-##    &lt;date&gt;        &lt;dbl&gt;
+##    &lt;date&gt;        &lt;int&gt;
 ##  1 2012-10-01        0
 ##  2 2012-10-02      126
 ##  3 2012-10-03    11352
@@ -252,7 +250,7 @@ interval: Identifier for the 5-minute interval in which measurement was taken.</
      head(TotalStepsPerInterval,10)</code></pre>
 <pre><code>## # A tibble: 10 x 2
 ##    interval meansteps
-##       &lt;dbl&gt;     &lt;dbl&gt;
+##       &lt;int&gt;     &lt;dbl&gt;
 ##  1        0    1.72  
 ##  2        5    0.340 
 ##  3       10    0.132 
@@ -295,18 +293,16 @@ interval: Identifier for the 5-minute interval in which measurement was taken.</
 
 # Display first 10 rows of data
     head(activity,10)</code></pre>
-<pre><code>## # A tibble: 10 x 4
-##    steps date       interval Date      
-##    &lt;dbl&gt; &lt;date&gt;        &lt;dbl&gt; &lt;date&gt;    
-##  1    NA 2012-10-01        0 2012-10-01
-##  2    NA 2012-10-01        5 2012-10-01
-##  3    NA 2012-10-01       10 2012-10-01
-##  4    NA 2012-10-01       15 2012-10-01
-##  5    NA 2012-10-01       20 2012-10-01
-##  6    NA 2012-10-01       25 2012-10-01
-##  7    NA 2012-10-01       30 2012-10-01
-##  8    NA 2012-10-01       35 2012-10-01
-##  9    NA 2012-10-01       40 2012-10-01
+<pre><code>##    steps       date interval       Date
+## 1     NA 2012-10-01        0 2012-10-01
+## 2     NA 2012-10-01        5 2012-10-01
+## 3     NA 2012-10-01       10 2012-10-01
+## 4     NA 2012-10-01       15 2012-10-01
+## 5     NA 2012-10-01       20 2012-10-01
+## 6     NA 2012-10-01       25 2012-10-01
+## 7     NA 2012-10-01       30 2012-10-01
+## 8     NA 2012-10-01       35 2012-10-01
+## 9     NA 2012-10-01       40 2012-10-01
 ## 10    NA 2012-10-01       45 2012-10-01</code></pre>
 <pre class="r"><code># First, loop through all records of a copy of the ‘activity’ data. Then, look for records containing NA values. Finally, transform the ‘steps’ value based on matching the interval in the ‘TotalStepsPerInterval’ data frame created in a prior step
     
@@ -322,19 +318,17 @@ interval: Identifier for the 5-minute interval in which measurement was taken.</
     
 # Display first 10 rows of data
     head(activityNoNA,10)</code></pre>
-<pre><code>## # A tibble: 10 x 4
-##     steps date       interval Date      
-##     &lt;dbl&gt; &lt;date&gt;        &lt;dbl&gt; &lt;date&gt;    
-##  1 1.72   2012-10-01        0 2012-10-01
-##  2 0.340  2012-10-01        5 2012-10-01
-##  3 0.132  2012-10-01       10 2012-10-01
-##  4 0.151  2012-10-01       15 2012-10-01
-##  5 0.0755 2012-10-01       20 2012-10-01
-##  6 2.09   2012-10-01       25 2012-10-01
-##  7 0.528  2012-10-01       30 2012-10-01
-##  8 0.868  2012-10-01       35 2012-10-01
-##  9 0      2012-10-01       40 2012-10-01
-## 10 1.47   2012-10-01       45 2012-10-01</code></pre>
+<pre><code>##        steps       date interval       Date
+## 1  1.7169811 2012-10-01        0 2012-10-01
+## 2  0.3396226 2012-10-01        5 2012-10-01
+## 3  0.1320755 2012-10-01       10 2012-10-01
+## 4  0.1509434 2012-10-01       15 2012-10-01
+## 5  0.0754717 2012-10-01       20 2012-10-01
+## 6  2.0943396 2012-10-01       25 2012-10-01
+## 7  0.5283019 2012-10-01       30 2012-10-01
+## 8  0.8679245 2012-10-01       35 2012-10-01
+## 9  0.0000000 2012-10-01       40 2012-10-01
+## 10 1.4716981 2012-10-01       45 2012-10-01</code></pre>
 </div>
 <div id="histogram-of-total-number-of-steps-taken-each-day-after-missing-values-are-imputed" class="section level3">
 <h3>7 ] HISTOGRAM OF TOTAL NUMBER OF STEPS TAKEN EACH DAY AFTER MISSING VALUES ARE IMPUTED</h3>
